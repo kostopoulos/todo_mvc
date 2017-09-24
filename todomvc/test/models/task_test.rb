@@ -9,4 +9,12 @@ class TaskTest < ActiveSupport::TestCase
   	task = Task.new
   	assert task.status , Task.availableStatuses[:active]
   end
+
+  test "should not save task without description" do
+  	task = Task.new
+  	task.description = ''
+  	assert_raises ActiveRecord::RecordInvalid do
+  		task.save!
+  	end
+  end
 end
