@@ -17,4 +17,12 @@ class TaskTest < ActiveSupport::TestCase
   		task.save!
   	end
   end
+
+  test "should not save task when status is not a valid value" do
+  	task = Task.new
+  	task.status = Task.availableStatuses.length + 1
+  	assert_raises ActiveRecord::RecordInvalid do
+  		task.save!
+  	end
+  end
 end
