@@ -4,11 +4,5 @@ class Task < ActiveRecord::Base
 
 	validates_inclusion_of :status, in: Task.availableStatuses
 
-	after_initialize :init
-
-	def init
-		@status = Task.availableStatuses[:active]
-		@description = 'to do'
-	end
 
 end
