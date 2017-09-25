@@ -122,6 +122,7 @@ DEPENDENCIES
   jquery-rails
   minitest-reporters
   rails (= 4.1.16)
+  rake (= 12.1.0)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring
