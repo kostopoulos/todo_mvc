@@ -53,7 +53,7 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   test "should not update non existing task" do
-  	put :update , {id: -1 , description: 'new description'}
+  	put :update , {id: -1 , description: 'new description' , status: Task.availableStatuses[:completed]}
   	assert_response :ok
   	json_result = JSON.parse(response.body)
   	assert( json_result.include?('error') , "Expecting error message but got #{json_result} ")
