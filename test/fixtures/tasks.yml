@@ -9,3 +9,8 @@ one: {}
 #
 two: {}
 #  column: value
+
+# todo:
+#   id: 1
+#   status: Task.availableStatuses[:active]
+#   description: 'active todo'
