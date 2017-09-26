@@ -37,7 +37,7 @@ class TasksController < ApplicationController
 				task.status = params[:status].to_i
 			end
 			task.save!
-			render json: { data: task }, status: :created
+			render json: { data: task }, status: :ok
 		rescue Exception => e
 			render json: { error: e.message }, status: :ok
 		end

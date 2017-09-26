@@ -1,6 +1,15 @@
 require 'test_helper'
 
 class TasksControllerTest < ActionController::TestCase
+
+  def setup
+  	@task = Task.find(1)
+  	if @task.blank?
+  		@task = Task.new(:valid_todo)
+  	end
+  	@task.save!
+  end
+
   test "should return all tasks when calling index" do
   	get :index
   	assert_response :success
@@ -9,7 +18,7 @@ class TasksControllerTest < ActionController::TestCase
   test "should handle get task request with existing provided id" do
   	get :show, id: 1
   	assert_response :success
-  	# assert_no_error_returned
+  	assert_no_error_returned
   end
 
   test "should handle get task request with non existing provided id" do
@@ -39,19 +48,19 @@ class TasksControllerTest < ActionController::TestCase
   test "should update existing task description when provided a valid value" do
   	put :update , {id: 1 , description: 'new description', status: Task.availableStatuses[:completed]}
   	assert_response :ok
-  	# assert_no_error_returned
+  	assert_no_error_returned
   end
 
   test "should update existing task description when provided only description" do
   	put :update , {id: 1 , description: 'new description'}
   	assert_response :ok
-  	# assert_no_error_returned
+  	assert_no_error_returned
   end
 
   test "should update existing task description when provided only status" do
   	put :update , {id: 1 , status: Task.availableStatuses[:completed]}
   	assert_response :ok
-  	# assert_no_error_returned
+  	assert_no_error_returned
   end
 
   test "should not update non existing task" do
