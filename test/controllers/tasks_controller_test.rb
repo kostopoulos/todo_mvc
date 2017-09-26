@@ -3,11 +3,16 @@ require 'test_helper'
 class TasksControllerTest < ActionController::TestCase
 
   def setup
-  	@task = Task.find(1)
-  	if @task.blank?
-  		@task = Task.new(:valid_todo)
+  	@valid_task = Task.find(1)
+  	if @valid_task.blank?
+  		@valid_task = Task.new(:valid_todo)
   	end
-  	@task.save!
+  	@valid_task.save!
+  	@task_to_delete = Task.find(2)
+  	if @task_to_delete.blank?
+  		@task_to_delete = Task.new(:tasks_for_deletion)
+  	end
+  	@task_to_delete.save!
   end
 
   test "should return all tasks when calling index" do
@@ -16,7 +21,7 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   test "should handle get task request with existing provided id" do
-  	get :show, id: 1
+  	get :show, id: @valid_task.id
   	assert_response :success
   	assert_no_error_returned
   end
@@ -46,19 +51,19 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   test "should update existing task description when provided a valid value" do
-  	put :update , {id: 1 , description: 'new description', status: Task.availableStatuses[:completed]}
+  	put :update , {id: @valid_task.id , description: 'new description', status: Task.availableStatuses[:completed]}
   	assert_response :ok
   	assert_no_error_returned
   end
 
   test "should update existing task description when provided only description" do
-  	put :update , {id: 1 , description: 'new description'}
+  	put :update , {id: @valid_task.id , description: 'new description'}
   	assert_response :ok
   	assert_no_error_returned
   end
 
   test "should update existing task description when provided only status" do
-  	put :update , {id: 1 , status: Task.availableStatuses[:completed]}
+  	put :update , {id: @valid_task.id , status: Task.availableStatuses[:completed]}
   	assert_response :ok
   	assert_no_error_returned
   end
@@ -67,6 +72,18 @@ class TasksControllerTest < ActionController::TestCase
   	put :update , {id: -1 , description: 'new description' , status: Task.availableStatuses[:completed]}
   	assert_response :ok
   	assert_error_returned
+  end
+
+  test "should fail when deleting non existing task" do
+  	delete :destroy, id: -1
+  	assert_response :bad_request
+  	assert_error_returned
+  end
+
+  test "should delete existing task" do
+  	delete :destroy, id: @task_to_delete.id
+  	assert_response :ok
+  	assert_no_error_returned
   end
 
 private 

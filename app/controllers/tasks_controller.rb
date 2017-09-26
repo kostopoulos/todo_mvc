@@ -29,7 +29,7 @@ class TasksController < ApplicationController
 	def update
 		begin
 			validate_params
-			task = Task.find params[:id]
+			task = Task.find( params[:id] ) rescue nil
 			unless params[:description].blank?
 				task.description = params[:description]
 			end
@@ -38,6 +38,21 @@ class TasksController < ApplicationController
 			end
 			task.save!
 			render json: { data: task }, status: :ok
+		rescue Exception => e
+			render json: { error: e.message }, status: :ok
+		end
+	end
+
+	def destroy
+		begin
+			validate_params
+			task = Task.find params[:id] rescue nil
+			if task.blank?
+				render json: { error: 'invalid request'}, status: :bad_request
+			else
+				task.destroy!
+				render json: { }, status: :ok
+			end
 		rescue Exception => e
 			render json: { error: e.message }, status: :ok
 		end

@@ -14,3 +14,7 @@ valid_todo:
   id: 1
   status: Task.availableStatuses[:active]
   description: 'active todo'
+tasks_for_deletion:
+  id: 2
+  status: Task.availableStatuses[:completed]
+  description: 'completed task for testing deletion'
