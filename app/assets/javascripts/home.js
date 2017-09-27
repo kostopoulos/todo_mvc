@@ -73,6 +73,20 @@ var TodoApp = {
 		    });
 		}
 	},
+	deleteTask: function(task_id){
+		$.ajax({
+			url: './tasks/'+task_id,
+			type: 'DELETE',
+			dataType: 'json',
+			contentType: 'application/json; charset=utf-8',
+			success: function (response) {
+				TodoApp.getAllTasks();
+			},
+			error: function (e) {
+	            console.log(e);
+	        }
+	    });
+	},
 	drawTask: function(task){
 		var template =
 		`<div class='row'>
@@ -82,6 +96,9 @@ var TodoApp = {
 		        <input id='checkbox` + task.id + `' type='checkbox' aria-label='Checkbox for following text input'/>
 		      </span>
 		      <input id='description` + task.id + `' onkeyup="TodoApp.updateTaskDescription(` + task.id + `);" type='text' class='form-control' aria-label='Text input with checkbox' value='`+task.description+`'/>
+		      <span>
+		        <button type="button" class="btn btn-outline-danger" onclick="TodoApp.deleteTask(` + task.id + `)">X</button>
+		      </span>
 		    </div>
 		  </div>
 		</div>`;
