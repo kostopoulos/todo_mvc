@@ -96,10 +96,15 @@ var TodoApp = {
 			success: function (response) {
 				$('#todos').html('');
 				var todosTemplate = '';
+				var countRemaining = 0;
 				$.each(response.data, function(key,value){
 					todosTemplate = todosTemplate + TodoApp.drawTask(value);
+					if( value.status != completed ){
+						countRemaining = countRemaining + 1;
+					}
 				});
 				$('#todos').html(todosTemplate);
+				$('#remainingTasks').text(countRemaining + ' items left');
 				$('#new-todo').val('');
 				$('#new-todo').focus();
 			},

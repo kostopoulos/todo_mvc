@@ -5,5 +5,22 @@
   <input id="new-todo" type="text" class="form-control" placeholder="What needs to be done?" aria-label="What needs to be done?" aria-describedby="basic-addon1" autofocus="">
 </div>
 
+<div class="btn-group" data-toggle="buttons">
+  <label id='remainingTasks' class="btn btn-secondary">
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> All
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option2" autocomplete="off"> Active
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="off"> In Progress
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="off"> Completed
+  </label>
+</div>
+
 <div id='todos'>
 </div>
