@@ -39,8 +39,11 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    childprocess (0.8.0)
+      ffi (~> 1.0, >= 1.0.11)
     colorize (0.8.1)
     erubis (2.7.0)
+    ffi (1.9.18)
     hike (1.2.3)
     i18n (0.8.6)
     jbuilder (2.6.4)
@@ -96,9 +99,13 @@ GEM
     rake (12.1.0)
     rdoc (4.3.0)
     ruby-progressbar (1.8.3)
+    rubyzip (1.2.1)
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    selenium-webdriver (3.6.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
     spring (1.7.2)
     sprockets (2.12.4)
       hike (~> 1.2)
@@ -134,6 +141,7 @@ DEPENDENCIES
   rails (= 4.1.16)
   rake (= 12.1.0)
   sdoc (~> 0.4.0)
+  selenium-webdriver
   spring
   sqlite3
   turbolinks

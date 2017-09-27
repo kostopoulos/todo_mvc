@@ -36,6 +36,7 @@ gem 'rake', '12.1.0'
 
 group :test, :development do
   gem 'konacha'
+  gem 'selenium-webdriver'
 end
 
 # Use ActiveModel has_secure_password
