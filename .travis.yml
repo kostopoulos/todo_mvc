@@ -4,4 +4,4 @@ rvm:
 install:
   - bundle install --path vendor/bundle
 script:
-  - rake test
+  - bundle exec rake test
