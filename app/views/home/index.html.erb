@@ -1,26 +1,30 @@
-<div class="text-center font-weight-bold">
-	<large>todos</large>
-</div>
-<div class="input-group">
-  <input id="new-todo" type="text" class="form-control" placeholder="What needs to be done?" aria-label="What needs to be done?" aria-describedby="basic-addon1" autofocus="">
-</div>
+<div class="container">
+  <div class="jumbotron jumbotron-fluid text-center">
+    <h1 class="display-3">todos</h1>
+	  <p class="lead">These are your todos.Feel free to play around with them.</p>
+  </div>
+  <div class="input-group">
+    <input id="new-todo" type="text" class="form-control" placeholder="What needs to be done?" aria-label="What needs to be done?" aria-describedby="basic-addon1" autofocus="">
+  </div>
 
-<div class="btn-group" data-toggle="buttons">
-  <label id='remainingTasks' class="btn btn-secondary">
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option1" autocomplete="off" checked> All
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option2" autocomplete="off"> Active
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option3" autocomplete="off"> In Progress
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option3" autocomplete="off"> Completed
-  </label>
-</div>
+  <div class="form-horizontal center-block">
+    <button class="btn">
+      <span id='remainingTasks' class="badge badge-light"></span> items left
+    </button>
+    <button class="btn">
+      <span id='allTasks' class="badge badge-secondary"></span> All
+    </button>
+    <button class="btn">
+      <span id='activeTasks' class="badge badge-success"></span> Active
+    </button>
+    <button class="btn">
+      <span id='inprogressTasks' class="badge badge-warning"></span> In Progress
+    </button>
+    <button class="btn">
+      <span id='completedTasks' class="badge badge-danger"></span> Completed
+    </button>
+  </div>
 
-<div id='todos'>
+  <div id='todos' class="form-horizontal center-block">
+  </div>
 </div>

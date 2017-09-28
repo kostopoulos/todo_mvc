@@ -2,9 +2,9 @@
 // All this logic will automatically be available in application.js.
 const ENTER_KEY = 13;
 // var ESCAPE_KEY = 27;
-const active = '0';
-const in_progress = '1';
-const completed = '2';
+const ACTIVE = '0';
+const IN_PROGRESS = '1';
+const COMPLETED = '2';
 
 
 $( document ).ready(function() {
@@ -29,7 +29,7 @@ var TodoApp = {
 		{
 			var data ={
 				description: taskDescription,
-				status: active
+				status: ACTIVE
 			}
 			$.ajax({
 				url: './tasks',
@@ -87,13 +87,57 @@ var TodoApp = {
 	        }
 	    });
 	},
+	updateTaskStatus: function(task_id,status){
+		var data ={
+				status: status
+			}
+			$.ajax({
+				url: './tasks/'+task_id,
+				type: 'PUT',
+				dataType: 'json',
+				data:  JSON.stringify(data),
+				contentType: 'application/json; charset=utf-8',
+				success: function (response) {
+					TodoApp.getAllTasks();
+				},
+				error: function (e) {
+		            console.log(e);
+		        }
+		    });
+	},
 	drawTask: function(task){
+		var statusDescription = '';
+		var badgeClass = '';
+		switch(String(task.status)) {
+		    case ACTIVE:
+		        statusDescription = 'Active';
+		        badgeClass = 'success'
+		        break;
+		    case IN_PROGRESS:
+		        statusDescription = 'In Progress';
+		        badgeClass = 'warning'
+		        break;
+		    case  COMPLETED:
+		      statusDescription = 'Completed  ';
+		      badgeClass = 'danger'
+		    default:
+		        break;
+		}
 		var template =
 		`<div class='row'>
 		  <div class='col-lg-6'>
 		    <div class='input-group'>
 		      <span class='input-group-addon'>
-		        <input id='checkbox` + task.id + `' type='checkbox' aria-label='Checkbox for following text input'/>
+		        <div class="btn-group">
+		          <button type="button" class="btn btn-` + badgeClass + ` dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		            ` + statusDescription + `
+		          </button>
+		          <div class="dropdown-menu">
+		            <button class="dropdown-item" onclick="TodoApp.updateTaskStatus(`+ task.id + ',' + ACTIVE +`);"> Active</button>
+		            <button class="dropdown-item" onclick="TodoApp.updateTaskStatus(`+ task.id + ',' + IN_PROGRESS +`);">In Progress</button>
+		            <button class="dropdown-item" onclick="TodoApp.updateTaskStatus(`+ task.id + ',' + COMPLETED +`);">Completed</button>
+		          </div>
+		        </div>
 		      </span>
 		      <input id='description` + task.id + `' onkeyup="TodoApp.updateTaskDescription(` + task.id + `);" type='text' class='form-control' aria-label='Text input with checkbox' value='`+task.description+`'/>
 		      <span>
@@ -113,15 +157,29 @@ var TodoApp = {
 			success: function (response) {
 				$('#todos').html('');
 				var todosTemplate = '';
-				var countRemaining = 0;
+				var countAll = 0;
+				var countActive = 0;
+				var countInProgress = 0;
+				var countCompleted = 0;
 				$.each(response.data, function(key,value){
 					todosTemplate = todosTemplate + TodoApp.drawTask(value);
-					if( value.status != completed ){
-						countRemaining = countRemaining + 1;
+					countAll = countAll +1;
+					if( value.status == ACTIVE ){
+						countActive = countActive + 1;
+					}
+					else if( value.status == IN_PROGRESS ){
+						countInProgress = countInProgress + 1;
+					}
+					else if( value.status == COMPLETED ){
+						countCompleted = countCompleted + 1;
 					}
 				});
 				$('#todos').html(todosTemplate);
-				$('#remainingTasks').text(countRemaining + ' items left');
+				$('#remainingTasks').text(countActive + countInProgress);
+				$('#allTasks').text(countAll);
+				$('#activeTasks').text(countActive);
+				$('#inprogressTasks').text(countInProgress);
+				$('#completedTasks').text(countCompleted);
 				$('#new-todo').val('');
 				$('#new-todo').focus();
 			},
