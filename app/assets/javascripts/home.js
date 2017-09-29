@@ -2,6 +2,7 @@
 // All this logic will automatically be available in application.js.
 const ENTER_KEY = 13;
 // var ESCAPE_KEY = 27;
+const ALL = 'All';
 const ACTIVE = '0';
 const IN_PROGRESS = '1';
 const COMPLETED = '2';
@@ -12,10 +13,23 @@ $( document ).ready(function() {
     TodoApp.getAllTasks();
 });
 
+var taskTag = ALL;
 
 var TodoApp = {
 	bindEvents: function (e){
 		$('#new-todo').on('keyup', this.createTask.bind(this));
+	},
+	updatTaskFilter: function(filter){
+		taskTag = filter;
+		$('.'+ACTIVE).removeClass('d-none');
+		$('.'+IN_PROGRESS).removeClass('d-none');
+		$('.'+COMPLETED).removeClass('d-none');
+		if( taskTag != ALL ){
+		  $('.'+ACTIVE).addClass('d-none');
+		  $('.'+IN_PROGRESS).addClass('d-none');
+		  $('.'+COMPLETED).addClass('d-none');
+		  $('.'+taskTag).removeClass('d-none');
+	    }
 	},
 	createTask: function (e) {
 		var $input = $(e.target);
@@ -108,6 +122,10 @@ var TodoApp = {
 	drawTask: function(task){
 		var statusDescription = '';
 		var badgeClass = '';
+		var rowClass = String(task.status);
+		if( taskTag != ALL && taskTag != String(task.status) ){
+			rowClass = 'd-none';
+		}
 		switch(String(task.status)) {
 		    case ACTIVE:
 		        statusDescription = 'Active';
@@ -124,10 +142,9 @@ var TodoApp = {
 		        break;
 		}
 		var template =
-		`<div class='row'>
-		  <div class='col-lg-6'>
+		`<div class='row `+ rowClass + `'>
+		  <div class='col-lg-12'>
 		    <div class='input-group'>
-		      <span class='input-group-addon'>
 		        <div class="btn-group">
 		          <button type="button" class="btn btn-` + badgeClass + ` dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		            ` + statusDescription + `
@@ -138,11 +155,10 @@ var TodoApp = {
 		            <button class="dropdown-item" onclick="TodoApp.updateTaskStatus(`+ task.id + ',' + COMPLETED +`);">Completed</button>
 		          </div>
 		        </div>
-		      </span>
 		      <input id='description` + task.id + `' onkeyup="TodoApp.updateTaskDescription(` + task.id + `);" type='text' class='form-control' aria-label='Text input with checkbox' value='`+task.description+`'/>
-		      <span>
+		      
 		        <button type="button" class="btn btn-outline-danger" onclick="TodoApp.deleteTask(` + task.id + `)">X</button>
-		      </span>
+		      
 		    </div>
 		  </div>
 		</div>`;

@@ -11,16 +11,16 @@
     <button class="btn">
       <span id='remainingTasks' class="badge badge-light"></span> items left
     </button>
-    <button class="btn">
+    <button class="btn" onclick="TodoApp.updatTaskFilter(ALL);">
       <span id='allTasks' class="badge badge-secondary"></span> All
     </button>
-    <button class="btn">
+    <button class="btn" onclick="TodoApp.updatTaskFilter(ACTIVE);">
       <span id='activeTasks' class="badge badge-success"></span> Active
     </button>
-    <button class="btn">
+    <button class="btn" onclick="TodoApp.updatTaskFilter(IN_PROGRESS);">
       <span id='inprogressTasks' class="badge badge-warning"></span> In Progress
     </button>
-    <button class="btn">
+    <button class="btn" onclick="TodoApp.updatTaskFilter(COMPLETED);">
       <span id='completedTasks' class="badge badge-danger"></span> Completed
     </button>
   </div>
