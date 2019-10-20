@@ -5,7 +5,7 @@ This is a todo sample app.
 Requirements
 --
 
-Ruby 2.4.1 [(see file .ruby-version)](https://github.com/kostopoulos/todo_mvc/blob/master/.ruby-version)
+Ruby 2.6.0 [(see file .ruby-version)](https://github.com/kostopoulos/todo_mvc/blob/master/.ruby-version)
 
 Make sure to install dependencies :
 
